@@ -1,133 +1,120 @@
-'Test for 0-add_integer module'
+The ``0-add_integer`` module
+============================
 
-'Function to test:   add_integer()'
+Using ``add_integer``
+---------------------
 
->>> add_integer = __import__('0-add_integer').add_integer
+Importing function from module:
+	  >>> add_integer = __import__("0-add_integer").add_integer
 
-'positive integer values'
->>> add_integer(1, 23)
-24
+Checking for module documentation:
+	 >>> mod = __import__("0-add_integer").__doc__
+	 >>> len(mod) > 1
+	 True
 
-'negative integer values'
->>> add_integer(-3, -10)
--13
+Checking for function documentation:
+	 >>> func = __import__("0-add_integer").add_integer.__doc__
+	 >>> len(func) > 1
+	 True
 
-'positive floating values'
->>> add_integer(5.8, 9.1)
-14
+Checking regular addition:
+	 >>> add_integer(8, 7)
+	 15
 
-'negative floating values'
->>> add_integer(-2.9, -8.3)
--10
+Checking addition negative positive:
+	 >>> add_integer(-4, 3)
+	 -1
 
-'only one argument'
->>> add_integer(5)
-103
+Checking addition positive negative:
+	 >>> add_integer(5, -2)
+	 3
 
-'b argument is empty'
->>> add_integer(5,)
-103
+Checking addition negative negative:
+	 >>> add_integer(-9, -6)
+	 -15
 
-'a is an integer and b is a string'
->>> add_integer(2, "Meco")
-Traceback (most recent call last):
-...
-TypeError: b must be an integer
+Checking addition string with int:
+	 >>> add_integer("Hello", 8)
+	 Traceback (most recent call last):
+	 ...
+	 TypeError: a must be an integer
 
-'b is an integer and a is a string'
->>> add_integer("Meco", 2)
-Traceback (most recent call last):
-...
-TypeError: a must be an integer
+Checking addition int with string:
+	 >>> add_integer(8, "Hello")
+	 Traceback (most recent call last):
+	 ...
+	 TypeError: b must be an integer
 
-'a and b empty'
->>> add_integer()
-Traceback (most recent call last):
-...
-TypeError: add_integer() missing 1 required positional argument: 'a'
+Checking addition int with float:
+	 >>> add_integer(2, 10.7)
+	 12
 
-'a is a bool'
->>> add_integer(False, 4)
-Traceback (most recent call last):
-...
-TypeError: a must be an integer
+Checking addition float with int:
+	 >>> add_integer(100.6, 4)
+	 104
 
-'a is a tuple'
->>> add_integer((3, 5), 4)
-Traceback (most recent call last):
-...
-TypeError: a must be an integer
+Checking addition float with float:
+	 >>> add_integer(87.2, 1.09)
+	 88
 
-'a is a list'
->>> add_integer([3, 5], 4)
-Traceback (most recent call last):
-...
-TypeError: a must be an integer
+Checking addition incorrect type with correct type:
+	 >>> add_integer([1, 4, 3], 7)
+	 Traceback (most recent call last):
+	 ...
+	 TypeError: a must be an integer
 
-'a is a dict'
->>> add_integer({3, 5}, 4)
-Traceback (most recent call last):
-...
-TypeError: a must be an integer
+Checking addition correct type with incorrect type:
+	 >>> add_integer(7, "2")
+	 Traceback (most recent call last):
+	 ...
+	 TypeError: b must be an integer
 
-'b is a bool'
->>> add_integer(3, False)
-Traceback (most recent call last):
-...
-TypeError: b must be an integer
+Checking addition two incorrect types:
+	 >>> add_integer("90", [1, 7, 5])
+	 Traceback (most recent call last):
+	 ...
+	 TypeError: a must be an integer
 
-'b is a tuple'
->>> add_integer(2, (3, 5))
-Traceback (most recent call last):
-...
-TypeError: b must be an integer
+Checking addition correct type with None:
+	 >>> add_integer(2, None)
+	 Traceback (most recent call last):
+	 ...
+	 TypeError: b must be an integer
 
-'b is a list'
->>> add_integer(5, [3, 5])
-Traceback (most recent call last):
-...
-TypeError: b must be an integer
+Checking addition None with correct type:
+	 >>> add_integer(None, 8)
+	 Traceback (most recent call last):
+	 ...
+	 TypeError: a must be an integer
 
-'b is a dict'
->>> add_integer(8, {3, 5})
-Traceback (most recent call last):
-...
-TypeError: b must be an integer
+Checking no args:
+	 >>> add_integer()
+	 Traceback (most recent call last):
+	 ...
+	 TypeError: add_integer() missing 1 required positional argument: 'a'
 
-'a is an infinity float'
->>> import sys
->>> add_integer(sys.float_info.max + 1e292)
-Traceback (most recent call last):
-...
-TypeError: a must be an integer
+Checking one arg:
+	 >>> add_integer(8)
+	 106
 
-'b is an infinity float'
->>> import sys
->>> add_integer(3, sys.float_info.max + 1e292)
-Traceback (most recent call last):
-...
-TypeError: b must be an integer
+Checking more than two args:
+	 >>> add_integer(7, 6, 0)
+	 Traceback (most recent call last):
+	 ...
+	 TypeError: add_integer() takes from 1 to 2 positional arguments but 3 were given
 
-'a is nan'
->>> add_integer(float('nan'))
-Traceback (most recent call last):
-...
-TypeError: a must be an integer
+Checking long int:
+	 >>> add_integer(99999999999999999999, 1)
+	 100000000000000000000
 
-'b is nan'
->>> add_integer(3, float('nan'))
-Traceback (most recent call last):
-...
-TypeError: b must be an integer
+Checking for float overflow:
+	 >>> add_integer(0, float('inf'))
+	 Traceback (most recent call last):
+	 ...
+	 OverflowError: cannot convert float infinity to integer
 
-'a is inf'
->>> add_integer(float('inf'))
-Traceback (most recent call last):
-...
-TypeError: a must be an integer
-
-'b is inf'
->>> add_integer(3, float('inf'))
-Traceback (most recent call last):
-...
-TypeError: b must be an integer
+Checking addition with NaN:
+	 >>> add_integer(0, float('nan'))
+	 Traceback (most recent call last):
+	 ...
+	 ValueError: cannot convert float NaN to integer
